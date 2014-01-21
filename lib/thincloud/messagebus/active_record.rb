@@ -1,42 +1,49 @@
-##
-# Application event bus.  This wraps the event_bus gem for portability
-# and added ability to enhance methods signatures and payloads.
-#
-# All of these publishers are using ActiveRecord after_commit hook and
-# it's previous_changes hash which includes before and after values of
-# anything that changed.  After commit only fires if the transaction was
-# successful.
-#
 require "active_support/concern"
 
+# Module with relevant ActiveRecord event hooks to wire the Messagebus
+# to AR Models. Adds an `after_commit` hook to publish all model changes.
+#
+# Include in a model to publish "[model]_change" events.
+#
+# Example:
+#   class SomeModel < ActiveRecord::Base
+#     include Thincloud::Messagebus::ActiveRecord
+#
+#   end
 module Thincloud
   module Messagebus
+    # Enhanced event listener for model change events. Added to top-level
+    # Thincloud::Messagebus module.
+    def subscribe_to_model(pattern, listener = nil, method_name = nil, &blk)
+      ::EventBus.subscribe(pattern, listener, method_name) do |payload|
+        ar_payload = Thincloud::Messagebus::ActiveRecord::Payload
+        blk.call(ar_payload.new(payload)) if blk
+      end
+    end
 
-    ##
-    # include in model to define an event ("[model]_change") on all model changes
-    #
-    # Example:
-    #
-    # class EntitySelection < ActiveRecord::Base
-    #   include Thincloud::Messagebus::ActiveRecord
-    #
     module ActiveRecord
       extend ActiveSupport::Concern
 
       included do
+        # Add `after_commit` hook for all model changes
         after_commit :publish_changes_to_thincloud_messagebus
       end
 
       def publish_changes_to_thincloud_messagebus
-        Rails.logger.info "publish_changes #{previous_changes}"
-        Thincloud::Messagebus.publish :"#{self.class.model_name.downcase}_change",
-          { object: self, previous_changes: previous_changes }
+        event_name = "#{self.class.model_name.downcase}_change"
+
+        Thincloud::Messagebus.publish
+          :event_name,
+          {
+            object: self,
+            previous_changes: previous_changes
+          }
       end
 
-      ##
-      # Struct and subscriber to allow an enhanced payload that is
-      # smarter than your average payload about AR model changes.
+      # "Enhanced" payload for ActiveRecord events to be used in
+      # conjunction with Messagebus.subscribe_to_model.
       #
+      # Original payload can be retrieved with Payload.raw
       Payload = Struct.new(:raw) do
         def model
           raw.fetch(:object)
@@ -49,24 +56,7 @@ module Thincloud
         def new?
           changes["id"].present? && changes["id"][0].nil?
         end
-      end
-
-    end
-
-    ##
-    # enhanced event listener for [model]_change events
-    #
-    # By wrapping the payload into a struct, we add some convenience
-    # methods that make it easier to query the payload.
-    #
-    def subscribe_to_model(pattern, listener = nil, method_name = nil, &blk)
-      ::EventBus.subscribe(pattern, listener = nil, method_name = nil) do |payload|
-        model_payload = Thincloud::Messagebus::ActiveRecord::Payload.new(payload)
-        blk.call(model_payload) if blk
-      end
-    end
-
-  end
-end
-
-
+      end # Payload
+    end # ActiveRecord
+  end # Messagebus
+end # Thincloud
