@@ -2,47 +2,65 @@
 
 * [Homepage](https://github.com/elskwid/thincloud-messagebus#readme)
 * [Issues](https://github.com/elskwid/thincloud-messagebus/issues)
-* [Documentation](http://rubydoc.info/gems/thincloud-messagebus/frames)
-* [Email](mailto:don at elskwid.net)
+* [Email](mailto:dmorrison at newleaders.com)
 
 ## Description
 
-TODO: Description
+A thin wrapper around the `event_bus` gem to provide a simple interface
+for Thincloud applications. Still a **work in progress**.
 
 ## Features
 
 ## Examples
 
-    require 'thincloud/messagebus'
+### Add Messagebus
 
 ```ruby
-##
-# Probably should put this in an initializer
+require 'thincloud/messagebus'
+
+# Mix it into your application wherever you want
+
+module MyApplication
+  extend Thincloud::Messagebus
+end
+
+# Now you have `publish` and `subscribe` methods
+MyApplication.publish()
+
+MyApplication.subscribe()
+```
+
+### Using it with Rails
+
+Mix it in to your application as above and optionally bring along
+with ActiveRecord goodness.
+
+```ruby
+require "thincloud/messagebus/active_record"
+
+class Foo < ActiveRecord::Base
+  include Thincloud::Messagebus::ActiveRecord
+end
+
+#### Now you can subscribe to the model
+Foo.subscribe_to_model()
+```
+
+#### Example of wiring up subscribers
+```ruby
 # Load all subscribers since the subscriber directory is not auto-loaded.
 #
 # We don't want to auto-load the directory because we don't have
 # class/module/filename parity in there.
-#
+
 Dir["#{Rails.root}/app/subscribers/*.rb"].each do |file|
   require_dependency file
 end
 ```
 
-```ruby
-require "thincloud/messagebus"
-require "thincloud/messagebus/active_record"
-
-module MyApp
-  extend Thincloud::Messagebus
-  extend Thincloud::Messagebus::ActiveRecord
-end
-
-class Foo < ActiveRecord::Base
-  include Thincloud::Messagebus::ActiveRecord
-end
-```
-
 ## Requirements
+
+* `event_bus` gem
 
 ## Install
 
@@ -53,5 +71,3 @@ end
 Copyright (c) 2014 New Leaders
 
 See LICENSE.txt for details.
-
-
