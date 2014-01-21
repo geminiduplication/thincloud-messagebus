@@ -22,7 +22,7 @@ module Thincloud
       end
 
       def publish_changes_to_thincloud_messagebus
-        Thincloud::Messagebus.publish :"#{self.singular}_changed",
+        Thincloud::Messagebus.publish :"#{ActiveModel::Naming.singular(self)}_changed",
           {
             object: self,
             previous_changes: previous_changes
