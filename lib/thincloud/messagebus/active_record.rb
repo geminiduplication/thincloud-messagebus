@@ -4,7 +4,7 @@ require "active_support/concern"
 # Module with relevant ActiveRecord event hooks to wire the Messagebus
 # to AR Models. Adds an `after_commit` hook to publish all model changes.
 #
-# Include in a model to publish "[model]_change" events.
+# Include in a model to publish "[model]_changed" events.
 #
 # Example:
 #   class SomeModel < ActiveRecord::Base
@@ -22,7 +22,7 @@ module Thincloud
       end
 
       def publish_changes_to_thincloud_messagebus
-        Thincloud::Messagebus.publish :"#{self.class.model_name.downcase}_change",
+        Thincloud::Messagebus.publish :"#{self.class.model_name.downcase}_changed",
           {
             object: self,
             previous_changes: previous_changes
