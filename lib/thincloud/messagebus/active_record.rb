@@ -22,7 +22,7 @@ module Thincloud
       end
 
       def publish_changes_to_thincloud_messagebus
-        Thincloud::Messagebus.publish :"#{self.class.model_name.downcase}_changed",
+        Thincloud::Messagebus.publish :"#{self.singular}_changed",
           {
             object: self,
             previous_changes: previous_changes
