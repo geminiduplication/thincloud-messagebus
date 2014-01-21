@@ -1,1 +1,1 @@
-require 'thincloud/messagebus/version'
+require "thincloud/messagebus/version"

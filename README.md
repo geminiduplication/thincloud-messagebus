@@ -23,6 +23,6 @@ TODO: Description
 
 ## Copyright
 
-Copyright (c) 2014 Don Morrison
+Copyright (c) 2014 New Leaders
 
-See {file:LICENSE.txt} for details.
+See LICENSE.txt for details.
