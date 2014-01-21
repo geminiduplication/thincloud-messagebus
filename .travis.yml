@@ -11,3 +11,5 @@ rvm:
 matrix:
   allow_failures:
     - rvm: rbx-2.2
+notifications:
+  flowdock: 9feba89b66463a4fa85f2ede04c6dc82
