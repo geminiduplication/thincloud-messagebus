@@ -1,7 +1,9 @@
 require_relative "payload"
 
+##
 # Enhanced event listener for model change events. Added to top-level
 # Thincloud::Messagebus module.
+#
 module Thincloud
   module Messagebus
     def subscribe_to_model(pattern, listener = nil, method_name = nil, &blk)

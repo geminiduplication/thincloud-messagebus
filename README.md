@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/newleaders/thincloud-messagebus.png)](https://travis-ci.org/newleaders/thincloud-messagebus)
+
 # thincloud-messagebus
 
 * [Homepage](https://github.com/elskwid/thincloud-messagebus#readme)
