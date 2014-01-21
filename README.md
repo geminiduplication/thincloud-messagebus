@@ -1,9 +1,11 @@
 [![Build Status](https://travis-ci.org/newleaders/thincloud-messagebus.png)](https://travis-ci.org/newleaders/thincloud-messagebus)
+[![Code
+Climate](https://codeclimate.com/github/newleaders/thincloud-messagebus.png)](https://codeclimate.com/github/newleaders/thincloud-messagebus)
 
 # thincloud-messagebus
 
-* [Homepage](https://github.com/elskwid/thincloud-messagebus#readme)
-* [Issues](https://github.com/elskwid/thincloud-messagebus/issues)
+* [Homepage](https://github.com/newleaders/thincloud-messagebus#readme)
+* [Issues](https://github.com/newleaders/thincloud-messagebus/issues)
 * [Email](mailto:dmorrison at newleaders.com)
 
 ## Description
