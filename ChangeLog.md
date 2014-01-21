@@ -1,4 +1,4 @@
-### 0.0.1 / 2014-01-20
+### 0.0.1 / (unreleased)
 
-* Initial release:
-
+* Extract prototype from working application
+* Refine modules and namespacing to work with Thincloud::Messagebus name
