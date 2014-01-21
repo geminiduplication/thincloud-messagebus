@@ -33,7 +33,7 @@ MyApplication.subscribe()
 ### Using it with Rails
 
 Mix it in to your application as above and optionally bring along
-with ActiveRecord goodness.
+ActiveRecord goodness.
 
 ```ruby
 require "thincloud/messagebus/active_record"
@@ -43,7 +43,7 @@ class Foo < ActiveRecord::Base
 end
 
 #### Now you can subscribe to the model
-Foo.subscribe_to_model()
+MyApplication.subscribe_to_model()
 ```
 
 #### Example of wiring up subscribers
