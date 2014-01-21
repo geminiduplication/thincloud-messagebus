@@ -8,14 +8,16 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{TODO: Summary}
   gem.description   = %q{TODO: Description}
   gem.license       = "MIT"
-  gem.authors       = ["Don Morrison"]
-  gem.email         = "don@elskwid.net"
-  gem.homepage      = "https://github.com/elskwid/thincloud-messagebus#readme"
+  gem.authors       = ["Don Morrison", "John Dell"]
+  gem.email         = ["dmorrison@newleaders.com", "jdell@newleaders.com"]
+  gem.homepage      = "https://github.com/newleaders/thincloud-messagebus#readme"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
+
+  gem.add_dependency "event_bus", "~> 1.0"
 
   gem.add_development_dependency "bundler", "~> 1.2"
   gem.add_development_dependency "minitest", "~> 5.0"
