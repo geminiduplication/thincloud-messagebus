@@ -8,19 +8,9 @@ require "active_support/concern"
 # Example:
 #   class SomeModel < ActiveRecord::Base
 #     include Thincloud::Messagebus::ActiveRecord
-#
 #   end
 module Thincloud
   module Messagebus
-    # Enhanced event listener for model change events. Added to top-level
-    # Thincloud::Messagebus module.
-    def subscribe_to_model(pattern, listener = nil, method_name = nil, &blk)
-      ::EventBus.subscribe(pattern, listener, method_name) do |payload|
-        ar_payload = Thincloud::Messagebus::ActiveRecord::Payload
-        blk.call(ar_payload.new(payload)) if blk
-      end
-    end
-
     module ActiveRecord
       extend ActiveSupport::Concern
 
@@ -38,24 +28,9 @@ module Thincloud
             previous_changes: previous_changes
           }
       end
-
-      # "Enhanced" payload for ActiveRecord events to be used in
-      # conjunction with Messagebus.subscribe_to_model.
-      #
-      # Original payload can be retrieved with Payload.raw
-      Payload = Struct.new(:raw) do
-        def model
-          raw.fetch(:object)
-        end
-
-        def changes
-          raw.fetch(:previous_changes){ Hash.new }
-        end
-
-        def new?
-          changes.fetch("id"){ Array.new }[0].nil?
-        end
-      end # Payload
     end # ActiveRecord
   end # Messagebus
 end # Thincloud
+
+require_relative "active_record/payload"
+require_relative "active_record/subscribe_to_model"
