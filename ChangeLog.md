@@ -2,3 +2,5 @@
 
 * Extract prototype from working application
 * Refine modules and namespacing to work with Thincloud::Messagebus name
+* Add first-pass tests
+* Add early README
