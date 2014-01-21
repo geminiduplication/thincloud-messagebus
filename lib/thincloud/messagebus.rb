@@ -8,7 +8,7 @@ module Thincloud
     extend self
 
     # Publish an event to the message bus.
-    def publish(event, payload={})
+    def publish(event, payload = {})
       ::EventBus.announce(event, payload)
     end
 

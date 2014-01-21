@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "event_bus", "~> 1.0"
 
+  gem.add_development_dependency "activesupport", ">= 3.2"
   gem.add_development_dependency "bundler", "~> 1.2"
   gem.add_development_dependency "minitest", "~> 5.0"
   gem.add_development_dependency "rake", "~> 10.0"

@@ -32,8 +32,7 @@ module Thincloud
       def publish_changes_to_thincloud_messagebus
         event_name = "#{self.class.model_name.downcase}_change"
 
-        Thincloud::Messagebus.publish
-          :event_name,
+        Thincloud::Messagebus.publish :event_name,
           {
             object: self,
             previous_changes: previous_changes
@@ -54,7 +53,7 @@ module Thincloud
         end
 
         def new?
-          changes["id"].present? && changes["id"][0].nil?
+          changes.fetch("id"){ Array.new }[0].nil?
         end
       end # Payload
     end # ActiveRecord
