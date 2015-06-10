@@ -5,8 +5,8 @@ require File.expand_path("../lib/thincloud/messagebus/version", __FILE__)
 Gem::Specification.new do |gem|
   gem.name          = "thincloud-messagebus"
   gem.version       = Thincloud::Messagebus::VERSION
-  gem.summary       = %q{TODO: Summary}
-  gem.description   = %q{TODO: Description}
+  gem.summary       = "A simple message bus"
+  gem.description   = "A simple message bus"
   gem.license       = "MIT"
   gem.authors       = ["Don Morrison", "John Dell"]
   gem.email         = ["dmorrison@newleaders.com", "jdell@newleaders.com"]
