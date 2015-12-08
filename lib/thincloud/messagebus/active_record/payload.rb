@@ -15,7 +15,7 @@ module Thincloud
         end
 
         def new?
-          changes.fetch("id"){ Array.new }[0].nil?
+          !changes["id"].nil? && changes["id"].first.nil? && !changes["id"].last.nil?
         end
       end # Payload
     end # ActiveRecord

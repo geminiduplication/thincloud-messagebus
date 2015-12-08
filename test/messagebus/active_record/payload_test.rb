@@ -30,4 +30,10 @@ describe Thincloud::Messagebus::ActiveRecord::Payload do
   it "can determine if a model was new?" do
     assert(payload.new?)
   end
+
+  it "can determine if a model is not new?" do
+    payload.stub :changes, {"id" => [2, 3]} do
+      refute payload.new?
+    end
+  end
 end
