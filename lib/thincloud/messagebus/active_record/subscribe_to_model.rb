@@ -6,8 +6,10 @@ require_relative "payload"
 #
 module Thincloud
   module Messagebus
-    def subscribe_to_model(pattern, listener = nil, method_name = nil, &blk)
+    def subscribe_to_model(pattern, include_destroy = false, listener = nil, method_name = nil, &blk)
       ::EventBus.subscribe(pattern, listener, method_name) do |payload|
+        return if !include_destroy && payload.fetch(:object).destroyed?
+
         ar_payload = Thincloud::Messagebus::ActiveRecord::Payload
         blk.call(ar_payload.new(payload)) if blk
       end

@@ -3,9 +3,19 @@ require "thincloud/messagebus/active_record"
 
 describe Thincloud::Messagebus::ActiveRecord::Payload do
   let(:mod) { Thincloud::Messagebus::ActiveRecord }
+  let(:object) { 
+    Objekt = Struct.new(:name) do
+      def model
+        name
+      end
+      def destroyed?
+        true
+      end
+    end
+  }
   let(:raw_payload) {
     {
-      object: "model",
+      object: object.new("model"),
       previous_changes: {
         "id"   => [nil, 1],
         "name" => ["old", "new"]
@@ -16,7 +26,7 @@ describe Thincloud::Messagebus::ActiveRecord::Payload do
   let(:payload) { mod::Payload.new(raw_payload) }
 
   it "aliases object to model" do
-    assert_equal(payload.model, "model")
+    assert_equal(payload.model.model, "model")
   end
 
   it "aliases previous_changes to changes" do
@@ -29,6 +39,10 @@ describe Thincloud::Messagebus::ActiveRecord::Payload do
 
   it "can determine if a model was new?" do
     assert(payload.new?)
+  end
+
+  it "can determine if a model was destroyed?" do
+    assert(payload.destroyed?)
   end
 
   it "can determine if a model is not new?" do

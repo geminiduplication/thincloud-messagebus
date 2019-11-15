@@ -13,6 +13,10 @@ module Thincloud
         def changes
           raw.fetch(:previous_changes){ Hash.new }
         end
+        
+        def destroyed?
+          model.destroyed?
+        end
 
         def new?
           !changes["id"].nil? && changes["id"].first.nil? && !changes["id"].last.nil?
